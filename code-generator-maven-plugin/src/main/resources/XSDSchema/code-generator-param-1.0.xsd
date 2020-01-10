@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://vood.com/schema/code-generator-param-1.0.xsd"
+           targetNamespace="http://vood.com/schema/code-generator-param-1.0.xsd"
+           elementFormDefault="qualified">
+
+    <xs:element name="pluginTines">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="tns:generateByTemplateList" name="TemplateGenerateList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="generateByTemplateList">
+        <xs:sequence minOccurs="2" maxOccurs="unbounded">
+            <xs:element type="tns:generate" name="Generate"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="generate">
+        <xs:attribute type="tns:templateEngineType" name="template"/>
+        <xs:attribute type="xs:string" name="package"/>
+        <xs:attribute type="xs:string" name="templateFile"/>
+        <xs:attribute type="xs:string" name="metaInfoXmlFile"/>
+        <xs:attribute type="xs:string" name="xsdForMetaInfoXmlFile"/>
+        <xs:attribute type="xs:string" name="fileNameParam"/>
+    </xs:complexType>
+
+    <xs:simpleType name="templateEngineType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FREE_MARKER"/>
+            <xs:enumeration value="VELOCITY"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

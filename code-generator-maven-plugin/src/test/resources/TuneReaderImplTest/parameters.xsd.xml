@@ -1,0 +1,6 @@
+<pluginTines>
+    <TemplateGenerateList>
+        <Generate template="VELOCITY" package="string" templateFile="string" metaInfoXmlFile="string"
+                  xsdForMetaInfoXmlFile="string" fileNameParam="string"/>
+    </TemplateGenerateList>
+</pluginTines>

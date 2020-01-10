@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://vood.com/schema/code-generator-data-1.0.xsd"
+           targetNamespace="http://vood.com/schema/code-generator-data-1.0.xsd"
+           elementFormDefault="qualified">
+
+    <xs:complexType name="entryType">
+        <xs:all>
+            <xs:element name="key" type="xs:string"/>
+            <xs:element name="value" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="mapType">
+        <xs:sequence minOccurs="10" maxOccurs="unbounded">
+            <xs:element name="entry" type="tns:entryType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="superEntryType">
+        <xs:all>
+            <xs:element name="key" type="xs:string"/>
+            <xs:element name="value" type="tns:mapType"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="superMapType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="10">
+            <xs:element name="entry" type="tns:superEntryType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="mapsType">
+        <xs:all>
+            <xs:element name="simpleMap" type="tns:mapType"/>
+            <xs:element name="superMap" type="tns:superMapType"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:element name="templateParam">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="tns:mapsType" name="params"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

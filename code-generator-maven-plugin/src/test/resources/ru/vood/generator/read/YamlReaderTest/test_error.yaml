@@ -1,0 +1,8 @@
+map1:
+  - {key1: '1', val: '2'}
+  - {key1: '3', val: '4'}
+multiMaps1:
+  - key: '10'
+    val:
+      - {key: '100', val: '200'}
+      - {key: '300', val: '400'}
