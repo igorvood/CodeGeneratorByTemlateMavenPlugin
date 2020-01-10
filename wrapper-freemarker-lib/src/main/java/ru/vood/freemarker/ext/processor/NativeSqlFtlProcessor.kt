@@ -5,11 +5,25 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.SimpleDriverDataSource
 import java.sql.DriverManager
 
-class NativeSqlFtlProcessor(
-        private val jdbcDriver: String,
-        private val url: String,
-        private val username: String,
-        private val password: String) : SimpleFtlProcessor() {
+class NativeSqlFtlProcessor(jdbcDriver: String, url: String, username: String, password: String) : SimpleFtlProcessor() {
+
+    val jdbcDriver: String
+    private val url: String
+    private val username: String
+    private val password: String
+
+    init {
+        try {
+            Class.forName(jdbcDriver)
+        } catch (e: ClassNotFoundException) {
+            throw JdbcDriverNotFoundException("Jdbc Driver $jdbcDriver not found. Add it in inclusion in dependencies", e)
+        }
+        this.jdbcDriver = jdbcDriver
+        this.url = url
+        this.username = username
+        this.password = password
+    }
+
 
     override fun process(template: Template, vararg args: Any?): String {
         val jdbcOperations = getJdbcOperations(jdbcDriver, url, username, password)
