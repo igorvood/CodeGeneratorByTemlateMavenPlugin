@@ -10,8 +10,8 @@ import ru.vood.generator.generate.runner.resolveEngineRunner
 import ru.vood.generator.read.YamlReader
 import ru.vood.generator.read.dto.PluginParamDto
 import ru.vood.generator.read.dto.TemplateParamDto
-import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
+import java.lang.RuntimeException
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.streams.toList
@@ -61,7 +61,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
 
         try {
             val file = File(templateFile)
-            if (!file.exists()) throw InvalidStateException("File '${templateFile}' does no exits")
+            if (!file.exists()) throw  RuntimeException("File '${templateFile}' does no exits")
 
             return Pair(p, resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
         } catch (e: Exception) {
