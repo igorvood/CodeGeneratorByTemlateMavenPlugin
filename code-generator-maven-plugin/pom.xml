@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.vood</groupId>
     <artifactId>code-generator-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>code-generator-maven-plugin Maven Mojo</name>
@@ -80,7 +79,6 @@
         <dependency>
             <groupId>ru.vood</groupId>
             <artifactId>wrapper-freemarker-lib</artifactId>
-            <version>1.1.0</version>
         </dependency>
 
         <dependency>

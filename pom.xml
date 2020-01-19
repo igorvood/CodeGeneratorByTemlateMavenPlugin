@@ -32,5 +32,24 @@
 
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.vood</groupId>
+                <artifactId>wrapper-freemarker-lib</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.vood</groupId>
+                <artifactId>code-generator-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+    </dependencies>
+
 
 </project>
