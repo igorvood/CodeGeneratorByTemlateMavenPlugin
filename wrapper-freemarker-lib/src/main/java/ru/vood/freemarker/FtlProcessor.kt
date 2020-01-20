@@ -7,6 +7,7 @@ class FtlProcessor : TemplateProcessor {
 
     override fun processFile(fileName: String, vararg args: Any?): String {
         simpleFtlProcessor.registerSharedVar("args", args)
+        println("FtlProcessor ")
         return simpleFtlProcessor.process(simpleFtlProcessor.getTemplate(fileName), args)
     }
 

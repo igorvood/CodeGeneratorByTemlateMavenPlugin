@@ -13,7 +13,14 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
 
     override fun getTemplate(templateName: String): Template {
         return try {
-            super.getTemplate(templateName)
+            println("AbstractFtlProcessor getTemplate 1 " + templateName)
+            super.getSharedVariableNames().stream().forEach { println(it) }
+            println("AbstractFtlProcessor getTemplate 1.1 " + templateName)
+//            super.template().stream().forEach{ println(it)}
+//            val template = super.getTemplate(templateName)
+            val template = super.getTemplate("generationCode/templateFile1.ftl")
+            println("AbstractFtlProcessor getTemplate 2")
+            template
         } catch (e: IOException) {
             throw SqlFtlException("Unable to get template '$templateName'", e)
         }
@@ -31,6 +38,7 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
     }
 
     open fun process(template: Template, vararg args: Any?): String {
+        println("AbstractFtlProcessor process")
         val sw = StringWriter()
         process(template, sw, *args)
         return sw.toString()
