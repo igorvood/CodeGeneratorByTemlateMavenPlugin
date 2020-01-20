@@ -20,8 +20,12 @@ class CodeGeneratorMojo : AbstractTjcMojo() {
     @Parameter(property = "pluginPropertyYaml", required = true, defaultValue = "\${project.basedir}/src/main/resources/CodeGenerator.yaml")
     private lateinit var pluginPropertyYamlFile: String
 
+    @Parameter(property = "pluginPropertyYaml", required = true, defaultValue = "\${project.basedir}/src/main/resources")
+    private lateinit var templateFolder: String
+
+
     override fun execute() {
-        ClassGenerator(FileNameResolverImpl(), GenerateFileImpl(), FileReaderImpl(), log).generate(pluginPropertyYamlFile, baseDirectory)
+        ClassGenerator(FileNameResolverImpl(), GenerateFileImpl(), FileReaderImpl(), log).generate(pluginPropertyYamlFile, baseDirectory, templateFolder)
 
 
 /*        val wallpaperDirectory = File("$baseDirectory/ru/vood/")

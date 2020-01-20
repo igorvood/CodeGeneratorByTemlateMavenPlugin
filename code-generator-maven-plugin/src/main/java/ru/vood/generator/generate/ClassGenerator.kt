@@ -18,9 +18,11 @@ import kotlin.streams.toList
 
 class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImpl: GenerateFile, val fileReader: FileReader, val log: Log) {
 
-    fun generate(pluginPropertyYamlFile: String, baseDirectory: String) {
+    fun generate(pluginPropertyYamlFile: String, baseDirectory: String, templateFolder: String) {
         val genParam = getGenParam(pluginPropertyYamlFile)
         val textFiles = generateTextFiles(genParam)
+//        textFiles.forEach { log.debug(it.first.toString() + " - > " + it.second) }
+
         val files: List<Triple<GenerateParamWithYamlDto, String, FilePropertyDto>> = textFiles.stream()
                 .map { p ->
                     p.second.split(p.first.classSeparator).stream()
@@ -50,7 +52,9 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
 
     fun generateTextFiles(param: List<GenerateParamWithYamlDto>): List<Pair<GenerateParamWithYamlDto, String>> {
         return param.stream()
+                .peek { log.debug("try to generate for $it") }
                 .map { genrateText(it) }
+                .peek { log.debug("success to generate for $it") }
                 .toList()
     }
 
