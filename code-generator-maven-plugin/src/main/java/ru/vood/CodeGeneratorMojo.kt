@@ -23,9 +23,6 @@ class CodeGeneratorMojo : AbstractTjcMojo() {
     override fun execute() {
         ClassGenerator(FileNameResolverImpl(), GenerateFileImpl(), FileReaderImpl(), log).generate(pluginPropertyYamlFile, baseDirectory)
 
-        val s =
-                if (1 == 2) "q"
-                else "bbb"
 
 /*        val wallpaperDirectory = File("$baseDirectory/ru/vood/")
         println(wallpaperDirectory.absolutePath)

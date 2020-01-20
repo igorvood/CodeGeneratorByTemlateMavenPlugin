@@ -1,7 +1,6 @@
 package ru.vood.generator.generate
 
 import org.apache.maven.plugin.logging.Log
-import ru.vood.generator.GenerationException
 import ru.vood.generator.file.FileReader
 import ru.vood.generator.file.GenerateFile
 import ru.vood.generator.file.getCanonicalPath
@@ -36,7 +35,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
                 .map { Triple(it.first.templateParamFileFilesDto.templateFile, it.first.templateParamFileFilesDto.templateParamFile, it.third) }
                 .collect(Collectors.toSet())
         if (dublicate.size > 0)
-            throw GenerationException("Duplicate is found $dublicate")
+            throw IllegalStateException("Duplicate is found $dublicate")
 
         log.info("------- TJC plugin Generate files ---------------")
         files.stream()
@@ -59,16 +58,14 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
         val templateFile = p.templateParamFileFilesDto.templateFile
         val templateEngine = p.templateEngine
 
-//        try {
-        val file = File(templateFile)
-        println("point 1 " + templateEngine)
-        if (!file.exists()) throw  RuntimeException("File '${file.absolutePath}' does no exits")
-        println("point 2 " + resolveEngineRunner(templateEngine).javaClass)
-        println("point 3 " + resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
-        return Pair(p, resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
-//        } catch (e: Exception) {
-//            throw GenerationException("Can not generate text for engine $templateEngine file $templateFile", e)
-//        }
+        try {
+            val file = File(templateFile)
+            if (!file.exists()) throw  RuntimeException("File '${templateFile}' does no exits")
+
+            return Pair(p, resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
+        } catch (e: Exception) {
+            throw IllegalStateException("Can not generate text for engine $templateEngine file $templateFile")
+        }
     }
 
     fun getGenParam(pluginPropertyYamlFile: String): List<GenerateParamWithYamlDto> {
