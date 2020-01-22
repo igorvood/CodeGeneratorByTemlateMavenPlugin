@@ -1,6 +1,7 @@
 package ru.vood.generator.generate
 
 import org.apache.maven.plugin.logging.Log
+import ru.vood.generator.GenerationException
 import ru.vood.generator.file.FileReader
 import ru.vood.generator.file.GenerateFile
 import ru.vood.generator.file.getCanonicalPath
@@ -67,7 +68,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
 
             return Pair(p, resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
         } catch (e: Exception) {
-            throw IllegalStateException("Can not generate text for engine $templateEngine file $templateFile")
+            throw GenerationException("Can not generate text for engine $templateEngine file $templateFile", e)
         }
     }
 
