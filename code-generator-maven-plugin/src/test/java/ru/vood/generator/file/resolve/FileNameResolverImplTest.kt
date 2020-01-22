@@ -26,7 +26,7 @@ internal class FileNameResolverImplTest {
                 .map { Pair<File, String>(it, readFile(it)) }
 //                .filter{it.first.absolutePath.contains("VBdIndexedColomnsEntityTest")}
                 .peek { println("----->" + it.first) }
-                .map { Pair(it.first.absolutePath.replace("\\", "."), fileNameResolver.resolveFileByContent(calculationTypeFile(it.first), it.second)) }
+                .map { Pair(it.first.absolutePath.replace("\\", "."), fileNameResolver.resolveFileByContent(calculationTypeFile(it.first), it.second, "templateFile", "paramFile")) }
 //                .peek { println(it.first.substring(it.first.indexOf("ru.vood"))) }
                 .map { Pair(it.first.substring(it.first.indexOf("ru.vood")), it.second) }
                 .peek { Assertions.assertTrue(it.first.contains(it.second.packageStr), "package for ${it.first} does not correct") }
@@ -40,7 +40,7 @@ internal class FileNameResolverImplTest {
     fun resolveFileByContentAllError() {
         val text = "qwerty"
         try {
-            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text)
+            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text, "templateFile", "paramFile")
             Assertions.fail<String>("exception expected")
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(e.message.contains("Can not resolve package name, regexp"))
@@ -56,7 +56,7 @@ internal class FileNameResolverImplTest {
     fun resolveFileByContentPackageError() {
         val text = "public @interface Annotation1 { }\n"
         try {
-            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text)
+            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text, "templateFile", "paramFile")
             Assertions.fail<String>("exception expected")
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(e.message.contains("Can not resolve package name, regexp"))
@@ -72,7 +72,7 @@ internal class FileNameResolverImplTest {
     fun resolveFileByContentClassError() {
         val text = "package ru.vood.reg;"
         try {
-            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text)
+            fileNameResolver.resolveFileByContent(TypeFile.KOTLIN, text, "templateFile", "paramFile")
             Assertions.fail<String>("exception expected")
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(!e.message.contains("Can not resolve package name, regexp"))

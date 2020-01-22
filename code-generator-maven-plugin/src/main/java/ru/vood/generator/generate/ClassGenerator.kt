@@ -26,7 +26,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
         val files: List<Triple<GenerateParamWithYamlDto, String, FilePropertyDto>> = textFiles.stream()
                 .map { p ->
                     p.second.split(p.first.classSeparator).stream()
-                            .map { Triple(p.first, it, fileNameResolver.resolveFileByContent(p.first.classType, it)) }
+                            .map { Triple(p.first, it, fileNameResolver.resolveFileByContent(p.first.classType, it, p.first.templateParamFileFilesDto.templateFile, p.first.templateParamFileFilesDto.templateParamFile)) }
                 }
                 .flatMap { it }
                 .toList()

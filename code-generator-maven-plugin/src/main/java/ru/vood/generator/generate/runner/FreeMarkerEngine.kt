@@ -9,7 +9,10 @@ class FreeMarkerEngine(val ftlProcessor: TemplateProcessor) : RunnerEngine {
 
     override fun generateText(param: TemplateParamDto, templateFile: File): String {
         try {
-            return ftlProcessor.processFile(templateFile.absolutePath, arrayOf<Any?>(param))
+            ftlProcessor.registerSharedVar("map", param.map)
+            ftlProcessor.registerSharedVar("multiList", param.multiList)
+            ftlProcessor.registerSharedVar("multiMaps", param.multiMaps)
+            return ftlProcessor.processFile(templateFile.absolutePath)
         } catch (e: Exception) {
             throw GenerationException("Error process template file ${templateFile.absolutePath} with param\n $param", e)
         }

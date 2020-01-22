@@ -58,6 +58,7 @@ class Test{
         val canonicalPathToOutputDirectory = getCanonicalPath(File(baseDirectory))
         // Add the output Directory.
         getProject().addCompileSourceRoot(canonicalPathToOutputDirectory)
+        getProject().compileSourceRoots.forEach { log.info("compileSourceRoot -> $it") }
     }
 
 
