@@ -25,6 +25,11 @@ class CodeGeneratorMojo : AbstractTjcMojo() {
 
 
     override fun execute() {
+//        val simpleFtlProcessor = SimpleFtlProcessor()
+//
+//        val templateFromString = simpleFtlProcessor.getTemplateFromString("qwe", "qazwsx")
+//        val process = simpleFtlProcessor.process(templateFromString)
+//        println(process)
         ClassGenerator(FileNameResolverImpl(), GenerateFileImpl(), FileReaderImpl(), log).generate(pluginPropertyYamlFile, baseDirectory, templateFolder)
 
 
