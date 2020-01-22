@@ -19,15 +19,12 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
         }
     }
 
-    open fun getTemplateFromString(templateName: String?, templateBody: String?): Template? {
-        requireNotNull(templateBody) { "Template body is null" }
-        val template: Template
-        template = try {
+    open fun getTemplateFromString(templateName: String, templateBody: String): Template {
+        return try {
             Template(templateName, templateBody, this)
         } catch (e: IOException) {
             throw SqlFtlException("Unable to create template from pure ftl text", e)
         }
-        return template
     }
 
     open fun process(template: Template, vararg args: Any?): String {

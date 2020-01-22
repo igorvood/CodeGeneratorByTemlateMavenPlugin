@@ -5,20 +5,20 @@ import ru.vood.generator.file.FileReader
 import ru.vood.generator.file.GenerateFile
 import ru.vood.generator.file.getCanonicalPath
 import ru.vood.generator.file.resolve.FileNameResolver
-import ru.vood.generator.file.resolve.FilePropertyDto
 import ru.vood.generator.generate.runner.resolveEngineRunner
 import ru.vood.generator.read.YamlReader
 import ru.vood.generator.read.dto.PluginParamDto
 import ru.vood.generator.read.dto.TemplateParamDto
 import java.io.File
-import java.util.*
-import java.util.stream.Collectors
 import kotlin.streams.toList
 
 
 class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImpl: GenerateFile, val fileReader: FileReader, val log: Log) {
 
     fun generate(pluginPropertyYamlFile: String, baseDirectory: String, templateFolder: String) {
+        val genParam = getGenParam(pluginPropertyYamlFile)
+        val textFiles = generateTextFiles(genParam)
+        /*
         val genParam = getGenParam(pluginPropertyYamlFile)
         val textFiles = generateTextFiles(genParam)
 //        textFiles.forEach { log.debug(it.first.toString() + " - > " + it.second) }
@@ -46,7 +46,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
                 .map { generateFileImpl.generateFile(baseDirectory, it.third.packageStr, it.third.fileName, it.second) }
                 .forEach { log.info("Generated file $it") }
 
-        log.info("total files ${files.size}")
+        log.info("total files ${files.size}")*/
     }
 
 
