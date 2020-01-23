@@ -14,6 +14,7 @@ import ru.vood.generator.read.dto.PluginParamDto
 import ru.vood.generator.read.dto.TemplateParamDto
 import java.io.File
 import java.util.stream.Collectors
+import java.util.stream.Stream
 import kotlin.streams.toList
 
 
@@ -23,7 +24,6 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
         val allItems = HashSet<FilePropertyDto>()
         val files =
                 getGenParam(pluginPropertyYamlFile) //
-                        .stream()
                         .map { generateTextFile(it) }
                         .map { p ->
                             p.second.split(p.first.classSeparator)
@@ -33,7 +33,6 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
                         }
                         .flatMap { it }
                         .toList()
-
 
         val dublicate = files.stream()
                 .filter { !allItems.add(it.third) }
@@ -74,13 +73,13 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
         }
     }
 
-    fun getGenParam(pluginPropertyYamlFile: String): List<GenerateParamWithYamlDto> {
+    private fun getGenParam(pluginPropertyYamlFile: String): Stream<GenerateParamWithYamlDto> {
 
         val yamlReader = YamlReader(PluginParamDto::class.java, fileReader)
         val pluginParam = yamlReader.readTune(getCanonicalPath(File(pluginPropertyYamlFile)))
         val yamlTemplateParamDto = YamlReader(TemplateParamDto::class.java, fileReader)
 
-        val toList: List<GenerateParamWithYamlDto> = pluginParam.generateParamDto.stream()
+        val toList = pluginParam.generateParamDto.stream()
                 .map { p: GenerateParamDto ->
                     p.templateParamFilesDto.stream()
                             .map {
@@ -95,7 +94,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
                             }
                 }
                 .flatMap { it }
-                .toList()
+
         return toList
     }
 
