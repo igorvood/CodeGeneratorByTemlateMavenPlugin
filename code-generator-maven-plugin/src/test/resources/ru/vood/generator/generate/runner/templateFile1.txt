@@ -1,0 +1,19 @@
+======================= multiMaps=============================
+    key10 =>  key100 ->val200|   key300 ->val400|
+======================= map=============================
+    key1 = val2
+    key3 = val4
+======================= multiList=============================
+
+    package com.example.demo.generate
+
+    enum class key1000 {
+     s1,  s2,
+    }
+    ===================separator class======================
+    package com.example.demo.generate
+
+    enum class key2000 {
+     s3,  s4,
+    }
+    ===================separator class======================

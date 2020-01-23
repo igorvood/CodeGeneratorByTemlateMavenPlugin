@@ -14,6 +14,11 @@ enum class ExampleData(val clazz: Class<*>, val yaml: String) {
 
 fun yamlParamTemplateDto(): String {
     val yaml = Yaml(Constructor(TemplateParamDto::class.java))
+    val yamlDto = yamlParamTemplateDtoObject()
+    return yaml.dump(yamlDto)
+}
+
+fun yamlParamTemplateDtoObject(): TemplateParamDto {
     val yamlDto = TemplateParamDto()
     val listOf = listOf(KeyValDto("key1", "val2"), KeyValDto("key3", "val4"))
     yamlDto.map = listOf
@@ -22,11 +27,16 @@ fun yamlParamTemplateDto(): String {
             KeyValDto("key1000", listOf("s1", "s2")),
             KeyValDto("key2000", listOf("s3", "s4"))
     )
+    return yamlDto
+}
+
+fun pluginParamDto(): String {
+    val yaml = Yaml(Constructor(PluginParamDto::class.java))
+    val yamlDto = pluginParamDtoObject()
     return yaml.dump(yamlDto)
 }
 
-private fun pluginParamDto(): String {
-    val yaml = Yaml(Constructor(PluginParamDto::class.java))
+fun pluginParamDtoObject(): PluginParamDto {
     val yamlDto = PluginParamDto()
 
     yamlDto.generateParamDto = listOf(
@@ -61,5 +71,5 @@ private fun pluginParamDto(): String {
                     )
             )
     )
-    return yaml.dump(yamlDto)
+    return yamlDto
 }
