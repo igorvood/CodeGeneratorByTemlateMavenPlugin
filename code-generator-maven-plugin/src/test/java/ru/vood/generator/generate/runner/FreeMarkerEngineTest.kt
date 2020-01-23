@@ -20,9 +20,9 @@ internal class FreeMarkerEngineTest {
     fun generateText() {
         val generateText = freeMarkerEngine.generateText(
                 yamlParamTemplateDtoObject(),
-                File("C:\\_Develop\\CodeGeneratorByTemlateMavenPlugin\\code-generator-maven-plugin\\src\\test\\resources\\ru\\vood\\generator\\generate\\runner\\templateFile1.ftl")
+                File("src/test/resources/ru/vood/generator/generate/runner/templateFile1.ftl")
         )
-        val expected = File("C:\\_Develop\\CodeGeneratorByTemlateMavenPlugin\\code-generator-maven-plugin\\src\\test\\resources\\ru\\vood\\generator\\generate\\runner\\templateFile1.txt")
+        val expected = File("src/test/resources/ru/vood/generator/generate/runner/templateFile1.txt")
                 .readText()
         assertEquals(expected, generateText)
     }
