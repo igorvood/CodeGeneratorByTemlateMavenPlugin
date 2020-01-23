@@ -45,7 +45,7 @@ internal class FileNameResolverImplTest {
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(e.message.contains("Can not resolve package name, regexp"))
             Assertions.assertTrue(e.message.contains("Can not resolve class name, regexp"))
-            Assertions.assertTrue(e.message.contains(" File text:"))
+            Assertions.assertTrue(e.message.contains("Generated text"))
             Assertions.assertTrue(e.message.contains(text))
         } catch (e: Throwable) {
             Assertions.fail<String>("exception ${e.javaClass} not expected")
@@ -61,7 +61,7 @@ internal class FileNameResolverImplTest {
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(e.message.contains("Can not resolve package name, regexp"))
             Assertions.assertTrue(!e.message.contains("Can not resolve class name, regexp"))
-            Assertions.assertTrue(e.message.contains(" File text:"))
+            Assertions.assertTrue(e.message.contains("Generated text"))
             Assertions.assertTrue(e.message.contains(text))
         } catch (e: Throwable) {
             Assertions.fail<String>("exception ${e.javaClass} not expected")
@@ -77,7 +77,7 @@ internal class FileNameResolverImplTest {
         } catch (e: FileNameResolverException) {
             Assertions.assertTrue(!e.message.contains("Can not resolve package name, regexp"))
             Assertions.assertTrue(e.message.contains("Can not resolve class name, regexp"))
-            Assertions.assertTrue(e.message.contains(" File text:"))
+            Assertions.assertTrue(e.message.contains("Generated text"))
             Assertions.assertTrue(e.message.contains(text))
         } catch (e: Throwable) {
             Assertions.fail<String>("exception ${e.javaClass} not expected")

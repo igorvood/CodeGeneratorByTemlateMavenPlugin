@@ -11,13 +11,5 @@ data class GenerateParamWithYamlDto(
         , var classSeparator: String
         , var templateParamFileFilesDto: ParamForTemplateFilesDto
         , val templateParam: TemplateParamDto
-) {
-
-//    var templateEngine: TemplateEngine
-//    , var classType: TypeClass
-//    , var classSeparator: String
-//    , var templateParam: List<ParamForTemplate>
-
-
-//    constructor() : this(GenerateParamDto(), TemplateParamDto())
-}
+        , val dataBase: DataBaseConnectDto?
+)

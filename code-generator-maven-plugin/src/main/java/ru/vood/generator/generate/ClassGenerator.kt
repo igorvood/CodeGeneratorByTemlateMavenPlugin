@@ -9,6 +9,7 @@ import ru.vood.generator.file.resolve.FileNameResolver
 import ru.vood.generator.file.resolve.FilePropertyDto
 import ru.vood.generator.generate.runner.resolveEngineRunner
 import ru.vood.generator.read.YamlReader
+import ru.vood.generator.read.dto.GenerateParamDto
 import ru.vood.generator.read.dto.PluginParamDto
 import ru.vood.generator.read.dto.TemplateParamDto
 import java.io.File
@@ -19,7 +20,7 @@ import kotlin.streams.toList
 class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImpl: GenerateFile, val fileReader: FileReader, val log: Log) {
 
     fun generate(pluginPropertyYamlFile: String, baseDirectory: String, templateFolder: String) {
-        val genParam = getGenParam(pluginPropertyYamlFile)
+        val genParam: List<GenerateParamWithYamlDto> = getGenParam(pluginPropertyYamlFile)
         val textFiles = generateTextFiles(genParam)
 
         val files: List<Triple<GenerateParamWithYamlDto, String, FilePropertyDto>> = textFiles.stream()
@@ -78,8 +79,8 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
         val pluginParam = yamlReader.readTune(getCanonicalPath(File(pluginPropertyYamlFile)))
         val yamlTemplateParamDto = YamlReader(TemplateParamDto::class.java, fileReader)
 
-        val toList = pluginParam.generateParamDto.stream()
-                .map { p ->
+        val toList: List<GenerateParamWithYamlDto> = pluginParam.generateParamDto.stream()
+                .map { p: GenerateParamDto ->
                     p.templateParamFilesDto.stream()
                             .map {
                                 GenerateParamWithYamlDto(
@@ -87,7 +88,9 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
                                         p.classType,
                                         p.classSeparator,
                                         it,
-                                        yamlTemplateParamDto.readTune(it.templateParamFile))
+                                        yamlTemplateParamDto.readTune(it.templateParamFile),
+                                        p.dataBase
+                                )
                             }
                 }
                 .flatMap { it }
