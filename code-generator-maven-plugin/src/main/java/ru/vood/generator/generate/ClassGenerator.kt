@@ -20,18 +20,20 @@ import kotlin.streams.toList
 class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImpl: GenerateFile, val fileReader: FileReader, val log: Log) {
 
     fun generate(pluginPropertyYamlFile: String, baseDirectory: String, templateFolder: String) {
-        val genParam: List<GenerateParamWithYamlDto> = getGenParam(pluginPropertyYamlFile)
-        val textFiles = generateTextFiles(genParam)
-
-        val files: List<Triple<GenerateParamWithYamlDto, String, FilePropertyDto>> = textFiles.stream()
-                .map { p ->
-                    p.second.split(p.first.classSeparator).stream()
-                            .filter { it.trim() != "" }
-                            .map { Triple(p.first, it, fileNameResolver.resolveFileByContent(p.first.classType, it, p.first.templateParamFileFilesDto.templateFile, p.first.templateParamFileFilesDto.templateParamFile)) }
-                }
-                .flatMap { it }
-                .toList()
         val allItems = HashSet<FilePropertyDto>()
+        val files =
+                getGenParam(pluginPropertyYamlFile) //
+                        .stream()
+                        .map { generateTextFile(it) }
+                        .map { p ->
+                            p.second.split(p.first.classSeparator)
+                                    .stream()
+                                    .filter { it.trim() != "" }
+                                    .map { Triple(p.first, it, fileNameResolver.resolveFileByContent(p.first.classType, it, p.first.templateParamFileFilesDto.templateFile, p.first.templateParamFileFilesDto.templateParamFile)) }
+                        }
+                        .flatMap { it }
+                        .toList()
+
 
         val dublicate = files.stream()
                 .filter { !allItems.add(it.third) }
@@ -51,15 +53,14 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
     }
 
 
-    private fun generateTextFiles(param: List<GenerateParamWithYamlDto>): List<Pair<GenerateParamWithYamlDto, String>> {
-        return param.stream()
-                .peek { log.debug("try to generate for $it") }
-                .map { genrateText(it) }
-                .peek { log.debug("success to generate for $it") }
-                .toList()
+    private fun generateTextFile(param: GenerateParamWithYamlDto): Pair<GenerateParamWithYamlDto, String> {
+        log.debug("try to generate for $param")
+        val generatedText = generateText(param)
+        log.debug("success to generate for $generatedText")
+        return generatedText
     }
 
-    private fun genrateText(p: GenerateParamWithYamlDto): Pair<GenerateParamWithYamlDto, String> {
+    private fun generateText(p: GenerateParamWithYamlDto): Pair<GenerateParamWithYamlDto, String> {
         val templateFile = p.templateParamFileFilesDto.templateFile
         val templateEngine = p.templateEngine
 
