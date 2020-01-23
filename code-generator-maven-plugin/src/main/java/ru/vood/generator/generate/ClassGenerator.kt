@@ -21,7 +21,6 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
     fun generate(pluginPropertyYamlFile: String, baseDirectory: String, templateFolder: String) {
         val genParam = getGenParam(pluginPropertyYamlFile)
         val textFiles = generateTextFiles(genParam)
-//        textFiles.forEach { log.debug(it.first.toString() + " - > " + it.second) }
 
         val files: List<Triple<GenerateParamWithYamlDto, String, FilePropertyDto>> = textFiles.stream()
                 .map { p ->
