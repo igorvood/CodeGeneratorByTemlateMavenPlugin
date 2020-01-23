@@ -67,7 +67,7 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
             val file = File(templateFile)
             if (!file.exists()) throw  RuntimeException("File '${templateFile}' does no exits")
 
-            return Pair(p, resolveEngineRunner(templateEngine).generateText(p.templateParam, file))
+            return Pair(p, resolveEngineRunner(templateEngine, p.dataBase).generateText(p.templateParam, file))
         } catch (e: Exception) {
             throw GenerationException("Can not generate text for engine $templateEngine file $templateFile", e)
         }
