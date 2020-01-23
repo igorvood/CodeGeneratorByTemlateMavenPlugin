@@ -23,6 +23,6 @@ internal class TemplateProcessorSimpleFileTests : AbstractTests() {
                 "rs_transponse",
                 "test_static"
         )
-                .map { arguments: String? -> Arguments.of(arguments) }
+                .map { arguments: String -> Arguments.of(arguments) }
     }
 }
