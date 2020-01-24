@@ -16,6 +16,27 @@ interface ProcessFtl {
 
     fun process(template: Template, dest: Writer, vararg args: Any?)
 
+    fun process(templateName: String, vararg args: Any?): String = process(getTemplate(templateName), args)
+
+    fun process(clazz: Class<*>, templateName: String, vararg args: Any?): String = process(getTemplate(clazz, templateName), args)
+
+    fun process(templateName: String, templateBody: String, vararg args: Any?): String = process(getTemplateFromString(templateName, templateBody), args)
+
+    fun process(templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(getTemplate(templateName))
+    }
+
+    fun process(clazz: Class<*>, templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(getTemplate(clazz, templateName))
+    }
+
+    fun process(templateName: String, templateBody: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(getTemplateFromString(templateName, templateBody))
+    }
+
     fun registerSharedVar(name: String, `val`: Any)
 
     fun getFtlDefaultObjectWrapper(): FtlDefaultObjectWrapper
