@@ -1,5 +1,7 @@
 package ru.vood.freemarker.ext.sql;
 
+import freemarker.template.ObjectWrapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -10,7 +12,7 @@ public class FetchedResultSet {
     private final Map<String, Integer> columnIndices;
     private final List<List<Object>> rows;
 
-    FetchedResultSet(ResultSet rs, FtlDefaultObjectWrapper ftlDefaultObjectWrapper) throws SQLException {
+    FetchedResultSet(ResultSet rs, ObjectWrapper ftlDefaultObjectWrapper) throws SQLException {
         try {
             this.meta = Collections.unmodifiableList(ColumnMeta.of(rs.getMetaData()));
             final int columnCount = meta.size();

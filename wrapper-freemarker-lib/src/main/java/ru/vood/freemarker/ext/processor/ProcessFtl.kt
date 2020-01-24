@@ -1,7 +1,7 @@
 package ru.vood.freemarker.ext.processor
 
+import freemarker.template.ObjectWrapper
 import freemarker.template.Template
-import ru.vood.freemarker.ext.sql.FtlDefaultObjectWrapper
 import java.io.Writer
 
 interface ProcessFtl {
@@ -39,5 +39,5 @@ interface ProcessFtl {
 
     fun registerSharedVar(name: String, `val`: Any)
 
-    fun getFtlDefaultObjectWrapper(): FtlDefaultObjectWrapper
+    fun getFtlDefaultObjectWrapper(): ObjectWrapper
 }

@@ -3,7 +3,6 @@ package ru.vood.freemarker.ext.processor
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.*
 import org.springframework.util.Assert
-import ru.vood.freemarker.ext.sql.FtlDefaultObjectWrapper
 import ru.vood.freemarker.ext.sql.SqlFtlException
 import java.io.File
 import java.io.IOException
@@ -63,8 +62,8 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
         }
     }
 
-    override fun getFtlDefaultObjectWrapper(): FtlDefaultObjectWrapper {
-        return objectWrapper as FtlDefaultObjectWrapper
+    override fun getFtlDefaultObjectWrapper(): ObjectWrapper {
+        return objectWrapper
     }
 
     protected open fun getGetStaticMethod(): TemplateMethodModelEx {

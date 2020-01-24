@@ -23,16 +23,14 @@ internal class SimpleFtlProcessorTest {
 
     @Test
     fun processFileByClassNoParam() {
-        val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestNoParam.ftl")
-        val processFile = ftlProcessor.process(template)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestNoParam.ftl")
         Assertions.assertEquals("--NO PARAM--", processFile)
     }
 
     @Test
     fun processFileByClassWithParam() {
-        val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl")
         val stringParam = "zxc"
-        val processFile = ftlProcessor.process(template, stringParam)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl", stringParam)
         Assertions.assertEquals("PARAM->$stringParam", processFile)
     }
 
@@ -41,7 +39,7 @@ internal class SimpleFtlProcessorTest {
         val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl")
         val car = Car("BMW", 1234, Date())
         val car1 = Car("VW", 987, Date())
-        val processFile = ftlProcessor.process(template, car, car1)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl", car, car1)
         Assertions.assertEquals("PARAM->$car", processFile)
     }
 
