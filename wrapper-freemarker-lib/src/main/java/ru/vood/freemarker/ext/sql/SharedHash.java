@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class SharedHash {
 
-    private final Map storage = new HashMap();
+    private final HashMap<String, Object> storage = new HashMap();
 
 
     /**

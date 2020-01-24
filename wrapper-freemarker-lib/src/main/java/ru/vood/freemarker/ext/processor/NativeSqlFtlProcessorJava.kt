@@ -1,5 +1,6 @@
 package ru.vood.freemarker.ext.processor
 
+@Deprecated("delete")
 class NativeSqlFtlProcessorJava(jdbcDriver: String, url: String, username: String, password: String) : SimpleFtlProcessor() {
     private val jdbcDriver: String
     private val url: String

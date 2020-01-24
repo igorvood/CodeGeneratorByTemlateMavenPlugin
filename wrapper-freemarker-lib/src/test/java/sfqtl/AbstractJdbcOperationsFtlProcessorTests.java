@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.vood.freemarker.JdbcOperationsFtlProcessor;
+import ru.vood.freemarker.ext.processor.SpringFtlProcessor;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -27,12 +28,12 @@ abstract class AbstractJdbcOperationsFtlProcessorTests {
 
     @Autowired
     DataSource dataSource;
-    JdbcOperationsFtlProcessor jdbcOperationsFtlProcessor;
+    private JdbcOperationsFtlProcessor jdbcOperationsFtlProcessor;
 
     @BeforeAll
     private void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        this.jdbcOperationsFtlProcessor = new JdbcOperationsFtlProcessor(jdbcTemplate);
+        this.jdbcOperationsFtlProcessor = new JdbcOperationsFtlProcessor(new SpringFtlProcessor(jdbcTemplate));
     }
 
     void checkFtlFileProcessResult(String expectedResultFileName, String ftlFileName, Object... args) {
@@ -42,8 +43,8 @@ abstract class AbstractJdbcOperationsFtlProcessorTests {
         Assertions.assertEquals(expectedLines, actualLines);
     }
 
-    String process(String fileName, Object... args) {
-        return jdbcOperationsFtlProcessor.processFile(fileName, args);
+    private String process(String fileName, Object... args) {
+        return jdbcOperationsFtlProcessor.process(fileName, args);
     }
 
     private List<String> loadListOfStrings(String fileName) {

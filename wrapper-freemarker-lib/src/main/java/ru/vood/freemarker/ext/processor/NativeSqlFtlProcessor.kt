@@ -3,6 +3,7 @@ package ru.vood.freemarker.ext.processor
 import freemarker.template.Template
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.SimpleDriverDataSource
+import java.io.Writer
 import java.sql.DriverManager
 
 class NativeSqlFtlProcessor(jdbcDriver: String, url: String, username: String, password: String) : SimpleFtlProcessor() {
@@ -24,7 +25,6 @@ class NativeSqlFtlProcessor(jdbcDriver: String, url: String, username: String, p
         this.password = password
     }
 
-
     override fun process(template: Template, vararg args: Any?): String {
         val jdbcOperations = getJdbcOperations(jdbcDriver, url, username, password)
         val springFtlProcessor = SpringFtlProcessor(jdbcOperations)
@@ -35,6 +35,17 @@ class NativeSqlFtlProcessor(jdbcDriver: String, url: String, username: String, p
         val process = springFtlProcessor.process(template, *args)
 //        jdbcOperations.dataSource.connection.close()
         return process
+    }
+
+    override fun process(template: Template, dest: Writer, vararg args: Any?) {
+        val jdbcOperations = getJdbcOperations(jdbcDriver, url, username, password)
+        val springFtlProcessor = SpringFtlProcessor(jdbcOperations)
+        registerSharedVar("default_connection", springFtlProcessor.getDefaultConnectionMethod)
+        this.sharedVariableNames.stream()
+                .map { Pair(it as String, this.getSharedVariable(it)) }
+                .forEach { springFtlProcessor.registerSharedVar(it.first, it.second) }
+        springFtlProcessor.process(template, dest, *args)
+//        jdbcOperations.dataSource.connection.close()
     }
 
     companion object {

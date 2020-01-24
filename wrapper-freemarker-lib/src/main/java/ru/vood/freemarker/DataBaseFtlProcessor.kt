@@ -1,19 +1,11 @@
 package ru.vood.freemarker
 
 import ru.vood.freemarker.ext.processor.NativeSqlFtlProcessor
-import java.io.File
 
-class DataBaseFtlProcessor(
-        jdbcDriver: String,
-        url: String,
-        user: String,
-        password: String) : TemplateProcessor {
+class DataBaseFtlProcessor(val nativeSqlFtlProcessor: NativeSqlFtlProcessor) : AbstractTemplateProcessor(nativeSqlFtlProcessor) {
 
-    var nativeSqlFtlProcessor: NativeSqlFtlProcessor = NativeSqlFtlProcessor(jdbcDriver, url, user, password)
-
-    override fun processFile(fileName: String, vararg args: Any?): String {
-        val ftlText = File(fileName).readText()
-        return nativeSqlFtlProcessor.process(nativeSqlFtlProcessor.getTemplateFromString(fileName, ftlText), args)
+    override fun process(fileName: String, vararg args: Any?): String {
+        return nativeSqlFtlProcessor.process(fileName, args)
     }
 
     override fun registerSharedVar(name: String, `val`: Any) {

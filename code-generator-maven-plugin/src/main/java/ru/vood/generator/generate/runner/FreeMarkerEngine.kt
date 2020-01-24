@@ -12,7 +12,7 @@ class FreeMarkerEngine(val ftlProcessor: TemplateProcessor) : RunnerEngine {
             ftlProcessor.registerSharedVar("map", param.map)
             ftlProcessor.registerSharedVar("multiList", param.multiList)
             ftlProcessor.registerSharedVar("multiMaps", param.multiMaps)
-            return ftlProcessor.processFile(templateFile.absolutePath)
+            return ftlProcessor.process(templateFile.absolutePath)
         } catch (e: Exception) {
             throw GenerationException("Error process template file ${templateFile.absolutePath} with param\n $param", e)
         }

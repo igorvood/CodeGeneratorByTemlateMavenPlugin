@@ -33,24 +33,6 @@ public class SpringFtlProcessor extends SimpleFtlProcessor {
                     return defaultConnection;
                 };
     }
-/*
-
-    public ConnectionAdapter getDefaultConnection() {
-        return defaultConnection;
-    }
-*/
-
-    @NotNull
-    @Override
-    public String process(@NotNull Template template, @Nullable Object... args) {
-        final DataSource dataSource = defaultConnection.getJdbcOperations().getDataSource();
-        TransactionTemplate tt = new TransactionTemplate(new DataSourceTransactionManager(dataSource));
-        tt.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-        return
-                tt.execute(
-                        transactionStatus -> super.process(template, args)
-                );
-    }
 
     @Override
     public void process(@NotNull Template template, @NotNull Writer dest, @Nullable Object... args) {

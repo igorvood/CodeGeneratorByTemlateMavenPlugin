@@ -4,8 +4,26 @@ interface TemplateProcessor {
 
     fun registerSharedVar(name: String, `val`: Any)
 
-    fun processFile(fileName: String, vararg args: Any?): String
+    fun process(fileName: String, vararg args: Any?): String
 
-    fun processFile(clazz: Class<*>, fileName: String, vararg args: Any?) = processFile("""${clazz.name.replace(".", "/")}/$fileName""", args)
+    fun process(clazz: Class<*>, fileName: String, vararg args: Any?): String
+
+    fun process(templateName: String, templateBody: String, vararg args: Any?): String
+    //---------------------------------
+
+    fun process(templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(templateName)
+    }
+
+    fun process(clazz: Class<*>, templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(clazz, templateName)
+    }
+
+    fun process(templateName: String, templateBody: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(templateName, templateBody)
+    }
 
 }

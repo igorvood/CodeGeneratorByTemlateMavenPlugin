@@ -7,11 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.vood.freemarker.DataBaseFtlProcessor;
+import ru.vood.freemarker.ext.processor.NativeSqlFtlProcessor;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -42,14 +41,11 @@ abstract class AbstractDataBaseFtlProcessorTests {
     @Qualifier("dbConnectionPassword")
     String dbConnectionPassword;
 
-    DataBaseFtlProcessor dataBaseFtlProcessor;
-    private DataSourceTransactionManager transactionManager;
+    private DataBaseFtlProcessor dataBaseFtlProcessor;
 
     @BeforeAll
     private void setup() {
-        JdbcTemplate template = new JdbcTemplate(dataSource);
-        this.dataBaseFtlProcessor = new DataBaseFtlProcessor("oracle.jdbc.driver.OracleDriver", dbConnectionUrl, dbConnectionUser, dbConnectionPassword);
-        this.transactionManager = new DataSourceTransactionManager(dataSource);
+        this.dataBaseFtlProcessor = new DataBaseFtlProcessor(new NativeSqlFtlProcessor("oracle.jdbc.driver.OracleDriver", dbConnectionUrl, dbConnectionUser, dbConnectionPassword));
     }
 
     void checkFtlFileProcessResult(String expectedResultFileName, String ftlFileName, Object... args) {
@@ -59,8 +55,8 @@ abstract class AbstractDataBaseFtlProcessorTests {
         Assertions.assertEquals(expectedLines, actualLines);
     }
 
-    String process(String fileName, Object... args) {
-        return dataBaseFtlProcessor.processFile(fileName, args);
+    private String process(String fileName, Object... args) {
+        return dataBaseFtlProcessor.process(fileName, args);
     }
 
     private List<String> loadListOfStrings(String fileName) {
