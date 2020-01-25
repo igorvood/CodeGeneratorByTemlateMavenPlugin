@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import ru.vood.freemarker.FtlProcessor
+import ru.vood.freemarker.ext.processor.SimpleFtlProcessor
 import ru.vood.generator.read.dto.yamlParamTemplateDtoObject
 import java.io.File
 
@@ -13,7 +14,7 @@ internal class FreeMarkerEngineTest {
 
     @BeforeEach
     fun setUp() {
-        freeMarkerEngine = FreeMarkerEngine(FtlProcessor())
+        freeMarkerEngine = FreeMarkerEngine(FtlProcessor(SimpleFtlProcessor()))
     }
 
     @Test
