@@ -36,7 +36,6 @@ internal class SimpleFtlProcessorTest {
 
     @Test
     fun processFileByClassWithParamObject_1() {
-        val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl")
         val car = Car("BMW", 1234, Date())
         val car1 = Car("VW", 987, Date())
         val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl", car, car1)
@@ -45,9 +44,8 @@ internal class SimpleFtlProcessorTest {
 
     @Test
     fun processFileByClassWithParamObject_2() {
-        val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParamObject.ftl")
         val stringParam = Car("BMW", 123456789, Date(100, 3, 13))
-        val processFile = ftlProcessor.process(template, stringParam)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParamObject.ftl", stringParam)
         Assertions.assertTrue(processFile.contains("model->BMW,price->123456789,date->"))
         Assertions.assertTrue(processFile.contains(",dateTime->"))
         Assertions.assertEquals("model->BMW,price->123456789,date->2000-04-13,dateTime->2000-04-13 00:00:00", processFile)
