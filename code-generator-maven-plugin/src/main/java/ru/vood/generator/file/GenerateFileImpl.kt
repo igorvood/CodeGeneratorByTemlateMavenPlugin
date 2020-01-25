@@ -15,8 +15,7 @@ class GenerateFileImpl : GenerateFile {
 
     private fun createDirs(startPath: String, packageName: String): String {
         val dirs = """$startPath\${packageName.replace(".", "\\")}"""
-        val dir = Files.createDirectories(Paths.get(dirs))
-        return dir.toString()
+        return Files.createDirectories(Paths.get(dirs)).toString()
     }
 
 
