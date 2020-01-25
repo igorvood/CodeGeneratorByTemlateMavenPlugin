@@ -1,1 +1,1 @@
-model->${template_args[0][0].model},price->${template_args[0][0].price},date->${template_args[0][0].date?date},dateTime->${template_args[0][0].date?datetime}
+model->${template_args[0].model},price->${template_args[0].price},date->${template_args[0].date?date},dateTime->${template_args[0].date?datetime}
