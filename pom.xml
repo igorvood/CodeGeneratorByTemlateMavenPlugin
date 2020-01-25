@@ -11,6 +11,7 @@
     <modules>
         <module>wrapper-freemarker-lib</module>
         <module>code-generator-maven-plugin</module>
+        <module>generation-demo</module>
     </modules>
 
     <properties>

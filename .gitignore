@@ -2,3 +2,4 @@
 *.iml
 /wrapper-freemarker-lib/target/
 /code-generator-maven-plugin/target/
+/generation-demo/target/
