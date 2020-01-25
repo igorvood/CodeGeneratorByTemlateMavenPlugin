@@ -1,6 +1,6 @@
 ======================= multiMaps=============================
 <#list multiMaps as l>
-    ${l.key} => <#list l.val as l1> ${l1.key} ->${l1.val}|  </#list>
+    ${l.key} => <#list l.val as l1> ${l1.key} ->${l1.val}|</#list>
 </#list>
 ======================= map=============================
 <#list map as l>
@@ -12,11 +12,10 @@
         package com.example.demo.generate
 
         enum class ${l.key} {
-        <#list l.val as l1> ${l1}, </#list>
+        <#list l.val as l1>${l1},</#list>
         }
         ===================separator class======================
     </#list>
 </#macro>
-
 <@generateClass multiList/>
 <#flush>

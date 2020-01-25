@@ -22,9 +22,9 @@ internal class FreeMarkerEngineTest {
         val generateText = freeMarkerEngine.generateText(
                 yamlParamTemplateDtoObject(),
                 File("src/test/resources/ru/vood/generator/generate/runner/templateFile1.ftl")
-        )
+        ).trim()
         val expected = File("src/test/resources/ru/vood/generator/generate/runner/templateFile1.txt")
-                .readText()
+                .readText().trim()
         assertEquals(expected, generateText)
     }
 }
