@@ -25,32 +25,11 @@ class CodeGeneratorMojo : AbstractTjcMojo() {
 
 
     override fun execute() {
-//        val simpleFtlProcessor = SimpleFtlProcessor()
-//
-//        val templateFromString = simpleFtlProcessor.getTemplateFromString("qwe", "qazwsx")
-//        val process = simpleFtlProcessor.process(templateFromString)
-//        println(process)
-        ClassGenerator(FileNameResolverImpl(), GenerateFileImpl(), FileReaderImpl(), log).generate(pluginPropertyYamlFile, baseDirectory, templateFolder)
-
-
-/*        val wallpaperDirectory = File("$baseDirectory/ru/vood/")
-        println(wallpaperDirectory.absolutePath)
-        // have the object build the directory structure, if needed.
-        val mkdirs = wallpaperDirectory.mkdirs()
-        println("mkdirs = $mkdirs")
-
-        val outputFile = File(wallpaperDirectory, "Test.kt")
-
-        val createNewFile = outputFile.createNewFile()
-        println("createNewFile = $createNewFile")
-        outputFile.writeText("""package ru.vood
-
-class Test{
-    fun prn(){
-        println(this.javaClass.canonicalName)
-    }
-} """)*/
-
+        ClassGenerator(
+                FileNameResolverImpl(),
+                GenerateFileImpl(),
+                FileReaderImpl(), log)
+                .generate(pluginPropertyYamlFile, baseDirectory, templateFolder)
         addToCompile()
     }
 
@@ -60,20 +39,4 @@ class Test{
         getProject().addCompileSourceRoot(canonicalPathToOutputDirectory)
         getProject().compileSourceRoots.forEach { log.info("compileSourceRoot -> $it") }
     }
-
-
-//    private fun gen2() {
-//        println("------> HELLOW generatorTuneXmlFile->$generatorTuneXmlFile")
-//        val read: TuneReader<PluginTines> = XmlReader(XMLValidatorImpl())
-//        val readTuneFromFile = read.readTune(generatorTuneXmlFile)
-//        println("------> UNMARSHAL ->$readTuneFromFile.templateGenerateList.generate.size")
-//    }
-//
-//    private fun staticGenerate() {
-//        println("------> HELLOW baseDirectory->$baseDirectory")
-//        val test = GenerateFileImpl()
-//        val generateFile = test.generateFile(baseDirectory, packageS, fileName, code)
-//        println("------>$generateFile")
-//    }
-
 }
