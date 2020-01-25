@@ -7,16 +7,6 @@ import java.util.stream.Stream
 
 internal class JdbcOperationsFtlProcessorTest : AbstractJdbcOperationsFtlProcessorTests() {
 
-
-//    @BeforeEach
-//    fun setUp() {
-//    }
-//
-//    @Test
-//    fun processFile() {
-//    }
-
-
     private fun testData(): Stream<Arguments?>? {
         return Stream.of(
                 "test_template_name",
