@@ -5,5 +5,6 @@ data class DataBaseConnectDto(
         , var urlDb: String
         , var userDb: String
         , var passwordDb: String
-
-)
+) {
+    constructor() : this("jdbcDriver", "urlDb", "userDb", "passwordDb")
+}

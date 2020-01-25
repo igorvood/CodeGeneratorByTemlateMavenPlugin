@@ -2,6 +2,7 @@ package ru.vood.generator.read
 
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.Constructor
+import ru.vood.generator.GenerationException
 import ru.vood.generator.file.FileReader
 import ru.vood.generator.read.dto.ExampleData
 import java.io.File
@@ -17,13 +18,12 @@ class YamlReader<T>(private val clazz: Class<T>
         val readFile = fileReader.readFile(fileName)
         return try {
             return yaml.load<T>(readFile) ?: throw IllegalStateException("File $fileName is empty")
-
         } catch (e: Exception) {
             val example = Stream.of(*ExampleData.values())
                     .filter { it.clazz == clazz }
                     .findFirst()
                     .get()
-            throw IllegalStateException(
+            throw GenerationException(
                     "The file format $fileName is not as expected. Example:\n${example.yaml}"
                     , e)
         }

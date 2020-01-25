@@ -76,7 +76,9 @@ class ClassGenerator(val fileNameResolver: FileNameResolver, val generateFileImp
     private fun getGenParam(pluginPropertyYamlFile: String): Stream<GenerateParamWithYamlDto> {
 
         val yamlReader = YamlReader(PluginParamDto::class.java, fileReader)
+        println(("read 1" + pluginPropertyYamlFile))
         val pluginParam = yamlReader.readTune(getCanonicalPath(File(pluginPropertyYamlFile)))
+        println(("end read 1" + pluginPropertyYamlFile))
         val yamlTemplateParamDto = YamlReader(TemplateParamDto::class.java, fileReader)
 
         val toList = pluginParam.generateParamDto.stream()

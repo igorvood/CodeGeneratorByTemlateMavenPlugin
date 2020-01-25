@@ -12,6 +12,6 @@ generateParamDto:
   - classSeparator: ===================separator class======================
     classType: KOTLIN
     templateEngine: FREE_MARKER_DATABASE
-    dataBase: {jdbcDriver: oracle.jdbc.driver.OracleDriver, passwordDb: 1, urlDb: jdbc:oracle:thin:@//localhost:1521/jp, userDb: jp}
+    dataBase: {jdbcDriver: oracle.jdbc.driver.OracleDriver, passwordDb: 1q, urlDb: jdbc:oracle:thin:@//localhost:1521/jp, userDb: jp}
     templateParamFilesDto:
-      - {templateFile: generation-demo\src\main\resources\generationCode\templateFile3.ftl, templateParamFile: generation-demo\src\main\resources\generationCode\paramFile3.yaml}
+      - {templateFile: src\main\resources\generationCode\templateFile1.ftl, templateParamFile: src\main\resources\generationCode\paramFile1.yaml}
