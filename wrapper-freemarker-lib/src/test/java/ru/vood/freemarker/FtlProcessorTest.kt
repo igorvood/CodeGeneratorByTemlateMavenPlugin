@@ -1,12 +1,18 @@
 package ru.vood.freemarker
 
+import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
 import ru.vood.freemarker.ext.processor.SimpleFtlProcessor
-import ru.vood.freemarker.ext.sql.SqlFtlException
 import java.util.*
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@ContextConfiguration(classes = [TestConfig::class])
+@ExtendWith(MockKExtension::class)
 internal class FtlProcessorTest {
 
     private lateinit var ftlProcessor: TemplateProcessor
@@ -18,7 +24,7 @@ internal class FtlProcessorTest {
 
     @Test
     fun processFileNoParam() {
-        val processFile = ftlProcessor.processFile(fileName = "/ru/vood/freemarker/FtlProcessorTest/FtlProcessorImplTestNoParam.ftl")
+        val processFile = ftlProcessor.process(fileName = "src/test/resources/ru/vood/freemarker/FtlProcessorTest/FtlProcessorImplTestNoParam.ftl")
         Assertions.assertEquals("--NO PARAM--", processFile)
     }
 
@@ -31,7 +37,7 @@ internal class FtlProcessorTest {
     @Test
     fun processFileByClassWithParam() {
         val stringParam = "zxc"
-        val processFile = ftlProcessor.processFile(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl", stringParam)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParam.ftl", stringParam)
         Assertions.assertEquals("PARAM->$stringParam", processFile)
     }
 
@@ -64,7 +70,6 @@ internal class FtlProcessorTest {
 
     @Test
     fun processNotExistsFile() {
-        Assertions.assertThrows(SqlFtlException::class.java)
-        { ftlProcessor.process("qwerty.ftl") }
+        Assertions.assertThrows(NoSuchFileException::class.java) { ftlProcessor.process(FtlProcessorTest::class.java, "qwerty.ftl") }
     }
 }
