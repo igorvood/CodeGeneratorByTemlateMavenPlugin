@@ -8,7 +8,7 @@ class DataBaseFtlProcessor(val nativeSqlFtlProcessor: NativeSqlFtlProcessor) : A
         return nativeSqlFtlProcessor.process(fileName, args)
     }
 
-    override fun registerSharedVar(name: String, `val`: Any) {
-        nativeSqlFtlProcessor.setSharedVariable(name, `val`)
-    }
+//    fun registerSharedVar(name: String, `val`: Any) {
+//        nativeSqlFtlProcessor.setSharedVariable(name, `val`)
+//    }
 }

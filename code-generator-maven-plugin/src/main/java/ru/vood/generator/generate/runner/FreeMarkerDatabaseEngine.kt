@@ -8,10 +8,11 @@ import java.io.File
 class FreeMarkerDatabaseEngine(val ftlProcessor: DataBaseFtlProcessor) : RunnerEngine {
     override fun generateText(param: TemplateParamDto, templateFile: File): String {
         try {
-            ftlProcessor.registerSharedVar("map", param.map)
-            ftlProcessor.registerSharedVar("multiList", param.multiList)
-            ftlProcessor.registerSharedVar("multiMaps", param.multiMaps)
-            return ftlProcessor.process(templateFile.absolutePath)
+            val mapOf = mapOf<String, Any>(
+                    "map" to param.map,
+                    "multiList" to param.multiList,
+                    "multiMaps" to param.multiMaps)
+            return ftlProcessor.process(templateFile.absolutePath, mapOf)
         } catch (e: Exception) {
             throw GenerationException("Error process template file ${templateFile.absolutePath} with param\n $param", e)
         }

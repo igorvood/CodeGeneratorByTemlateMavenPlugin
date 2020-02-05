@@ -3,7 +3,8 @@ package ru.vood.freemarker
 import ru.vood.freemarker.ext.processor.ProcessFtl
 
 abstract class AbstractTemplateProcessor(val processFtl: ProcessFtl) : TemplateProcessor {
-    override fun registerSharedVar(name: String, `val`: Any) {
+
+    private fun registerSharedVar(name: String, `val`: Any) {
         processFtl.registerSharedVar(name, `val`)
     }
 
@@ -14,6 +15,22 @@ abstract class AbstractTemplateProcessor(val processFtl: ProcessFtl) : TemplateP
     override fun process(templateName: String, templateBody: String, vararg args: Any?): String {
         return processFtl.process(templateName, templateBody, *args)
     }
+
+    override fun process(templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(templateName)
+    }
+
+    override fun process(clazz: Class<*>, templateName: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(clazz, templateName)
+    }
+
+    override fun process(templateName: String, templateBody: String, param: Map<String, Any>): String {
+        param.forEach { registerSharedVar(it.key, it.value) }
+        return process(templateName, templateBody)
+    }
+
 
 
 }

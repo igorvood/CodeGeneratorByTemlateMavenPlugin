@@ -8,8 +8,8 @@ class JdbcOperationsFtlProcessor(val sqlFtlProcessor: SpringFtlProcessor) : Abst
         return sqlFtlProcessor.process(fileName, args)
     }
 
-    override fun registerSharedVar(name: String, `val`: Any) {
-        sqlFtlProcessor.setSharedVariable(name, `val`)
-    }
+//    override fun registerSharedVar(name: String, `val`: Any) {
+//        sqlFtlProcessor.setSharedVariable(name, `val`)
+//    }
 
 }
