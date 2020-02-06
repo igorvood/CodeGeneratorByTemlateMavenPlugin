@@ -13,6 +13,7 @@ import ru.vood.freemarker.ext.sql.ConnectionAdapter;
 
 import javax.sql.DataSource;
 import java.io.Writer;
+import java.util.Map;
 
 public class SpringFtlProcessor extends SimpleFtlProcessor {
     private final ConnectionAdapter defaultConnection;
@@ -23,7 +24,12 @@ public class SpringFtlProcessor extends SimpleFtlProcessor {
         registerSharedVar("default_connection", getGetDefaultConnectionMethod());
     }
 
-    public TemplateMethodModelEx getGetDefaultConnectionMethod() {
+    public SpringFtlProcessor(JdbcTemplate jdbcOperations, Map<String, Object> param) {
+        this(jdbcOperations);
+        param.forEach(this::registerSharedVar);
+    }
+
+    private TemplateMethodModelEx getGetDefaultConnectionMethod() {
         return
                 args -> {
                     Assert.isTrue(

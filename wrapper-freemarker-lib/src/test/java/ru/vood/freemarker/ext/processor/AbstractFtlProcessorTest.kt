@@ -73,17 +73,17 @@ internal open class AbstractFtlProcessorTest {
 
     @Test
     fun process_5() {
-        testRunner(Consumer<Any> { abstractFtlProcessorTest.process("templateName", mapOf()) })
+        testRunner(Consumer<Any> { abstractFtlProcessorTest.process("templateName") })
     }
 
     @Test
     fun process_6() {
-        testRunner(Consumer<Any> { abstractFtlProcessorTest.process(this::class.java, "templateName", mapOf()) })
+        testRunner(Consumer<Any> { abstractFtlProcessorTest.process(this::class.java, "templateName") })
     }
 
     @Test
     fun process_7() {
-        testRunner(Consumer<Any> { abstractFtlProcessorTest.process("templateName", "", mapOf()) })
+        testRunner(Consumer<Any> { abstractFtlProcessorTest.process("templateName", "") })
     }
 
 /*
@@ -133,5 +133,5 @@ internal open class AbstractFtlProcessorTest {
     fun getGetStaticMethod() {
     }*/
 
-    open class TestAbstraction : AbstractFtlProcessor()
+    open class TestAbstraction : AbstractFtlProcessor(mapOf())
 }

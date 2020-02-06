@@ -8,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import sfqtl.TestConfig
@@ -34,16 +32,11 @@ internal class NativeSqlFtlProcessorTest {
 
     @Autowired
     lateinit var dataSource: DataSource
-    lateinit var sqlFtlProcessor: SpringFtlProcessor
-    private lateinit var transactionManager: DataSourceTransactionManager
 
     lateinit var nativeSqlFtlProcessor: NativeSqlFtlProcessor
 
     @BeforeEach
     private fun setup() {
-        val template = JdbcTemplate(dataSource)
-        sqlFtlProcessor = SpringFtlProcessor(template)
-        transactionManager = DataSourceTransactionManager(dataSource)
         nativeSqlFtlProcessor = NativeSqlFtlProcessor("oracle.jdbc.driver.OracleDriver", dbConnectionUrl, dbConnectionUser, dbConnectionPassword)
     }
 
@@ -67,7 +60,6 @@ internal class NativeSqlFtlProcessorTest {
         }
 
         return Files.readString(file.toPath())
-//        C:\_Develop\CodeGeneratorByTemlateMavenPlugin\wrapper-freemarker-lib\src\test\java\sfqtl
     }
 
 

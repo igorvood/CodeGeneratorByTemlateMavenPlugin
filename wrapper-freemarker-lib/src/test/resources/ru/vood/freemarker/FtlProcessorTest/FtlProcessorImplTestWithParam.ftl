@@ -1,1 +1,1 @@
-PARAM->${template_args[0]}
+PARAM->${template_args()[0]}

@@ -6,10 +6,13 @@ import freemarker.template.TemplateExceptionHandler;
 import ru.vood.freemarker.ext.sql.FtlDefaultObjectWrapper;
 import ru.vood.freemarker.ext.sql.SharedHash;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SimpleFtlProcessor extends AbstractFtlProcessor {
 
     public SimpleFtlProcessor() {
-        super();
+        super(getStaticParam());
         // Set default settings
         setObjectWrapper(new FtlDefaultObjectWrapper(this.getIncompatibleImprovements()));
         setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -21,9 +24,14 @@ public class SimpleFtlProcessor extends AbstractFtlProcessor {
         setDateFormat("yyyy-MM-dd");
         setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
         setCacheStorage(new NullCacheStorage());
-        // Register user-defined variables and methods
-        registerSharedVar("shared_hash", new SharedHash());
-        registerSharedVar("static", getGetStaticMethod());
     }
+
+    private static Map<String, Object> getStaticParam() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("shared_hash", new SharedHash());
+//        map.put("static", getGetStaticMethod());
+        return map;
+    }
+
 
 }

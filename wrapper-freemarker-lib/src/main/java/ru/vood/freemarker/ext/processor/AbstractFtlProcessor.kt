@@ -1,8 +1,6 @@
 package ru.vood.freemarker.ext.processor
 
-import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.*
-import org.springframework.util.Assert
 import ru.vood.freemarker.ext.sql.SqlFtlException
 import java.io.File
 import java.io.IOException
@@ -10,7 +8,24 @@ import java.io.StringWriter
 import java.io.Writer
 import java.nio.file.Files
 
-abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS), ProcessFtl {
+abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS), ProcessFtl {
+
+    val param: ThreadLocal<Map<String, *>> = ThreadLocal()
+    val templateArg: ThreadLocal<Any> = ThreadLocal()
+
+    init {
+        param.entries.forEach { registerSharedVar(it.key, it.value) }
+        registerSharedVar("template_param", getParamMethod())
+        registerSharedVar("template_args", getTemplateArgMethod())
+    }
+
+    private fun getTemplateArgMethod(): TemplateMethodModelEx {
+        return TemplateMethodModelEx { templateArg.get() }
+    }
+
+    private fun getParamMethod(): TemplateMethodModelEx {
+        return TemplateMethodModelEx { param.get() }
+    }
 
     override fun getTemplate(clazz: Class<*>, templateName: String): Template {
         return getTemplate("""${clazz.name.replace(".", "/")}/$templateName""")
@@ -44,7 +59,7 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
 
     override fun process(template: Template, dest: Writer, vararg args: Any?) {
         val root = SimpleHash(getFtlDefaultObjectWrapper())
-        registerSharedVar("template_args", args)
+        templateArg.set(args)
         try {
             template.process(root, dest)
         } catch (e: IOException) {
@@ -54,7 +69,8 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
         }
     }
 
-    override fun registerSharedVar(name: String, `val`: Any) {
+    /*можно использовать только в конструкторе, иначе все перестает быть потоко безоопастным*/
+    protected fun registerSharedVar(name: String, `val`: Any) {
         try {
             setSharedVariable(name, `val`)
         } catch (e: TemplateModelException) {
@@ -66,16 +82,33 @@ abstract class AbstractFtlProcessor : Configuration(DEFAULT_INCOMPATIBLE_IMPROVE
         return objectWrapper
     }
 
-    protected open fun getGetStaticMethod(): TemplateMethodModelEx {
-        return TemplateMethodModelEx { args: List<*> ->
-            Assert.isTrue(args.size == 1) { "Wrong number of arguments: expected 1, got " + args.size }
-            val classNameObj = args[0]!!
-            Assert.isTrue(
-                    classNameObj is TemplateScalarModel
-            ) { "Illegal type of argument #1: expected string, got " + classNameObj.javaClass.name }
-            BeansWrapperBuilder(incompatibleImprovements).build()
-                    .staticModels[(classNameObj as TemplateScalarModel).asString]
-        }
+//    companion object {
+//        protected fun getGetStaticMethod(): TemplateMethodModelEx {
+//            return TemplateMethodModelEx { args: List<*> ->
+//                Assert.isTrue(args.size == 1) { "Wrong number of arguments: expected 1, got " + args.size }
+//                val classNameObj = args[0]!!
+//                Assert.isTrue(
+//                        classNameObj is TemplateScalarModel
+//                ) { "Illegal type of argument #1: expected string, got " + classNameObj.javaClass.name }
+//                BeansWrapperBuilder(incompatibleImprovements).build()
+//                        .staticModels[(classNameObj as TemplateScalarModel).asString]
+//            }
+//        }
+//    }
+
+    override fun process(templateName: String, param: Map<String, *>): String {
+        this.param.set(param)
+        return process(getTemplate(templateName))
+    }
+
+    override fun process(clazz: Class<*>, templateName: String, param: Map<String, *>): String {
+        this.param.set(param)
+        return process(getTemplate(clazz, templateName))
+    }
+
+    override fun process(templateName: String, templateBody: String, param: Map<String, *>): String {
+        this.param.set(param)
+        return process(getTemplateFromString(templateName, templateBody))
     }
 
 

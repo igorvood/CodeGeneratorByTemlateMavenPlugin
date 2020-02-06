@@ -53,10 +53,10 @@ internal class SimpleFtlProcessorTest {
 
     @Test
     fun processFileByClassWithParamObject_3() {
-        val template = ftlProcessor.getTemplate(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParamObject2.ftl")
         val stringParam = Car("BMW", 123456789, Date(100, 3, 13))
-        ftlProcessor.registerSharedVar("carJava", stringParam)
-        val processFile = ftlProcessor.process(template)
+        val hashMap = HashMap<String, Any>()
+        hashMap.put("carJava", stringParam)
+        val processFile = ftlProcessor.process(FtlProcessorTest::class.java, "FtlProcessorImplTestWithParamObject2.ftl", hashMap)
         Assertions.assertTrue(processFile.contains("model->BMW,price->123456789,date->"))
         Assertions.assertTrue(processFile.contains(",dateTime->"))
         Assertions.assertEquals("model->BMW,price->123456789,date->2000-04-13,dateTime->2000-04-13 00:00:00", processFile)
