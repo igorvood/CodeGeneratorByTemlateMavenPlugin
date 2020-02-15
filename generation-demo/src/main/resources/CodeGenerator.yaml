@@ -3,15 +3,15 @@ generateParamDto:
     classType: KOTLIN
     templateEngine: FREE_MARKER
     templateParamFilesDto:
-      - {templateFile: generation-demo\src\main\resources\generationCode\templateFile1.ftl, templateParamFile: generation-demo\src\main\resources\generationCode\paramFile1.yaml}
+      - {templateFile: src\main\resources\generationCode\templateFile1.ftl, templateParamFile: src\main\resources\generationCode\paramFile1.yaml}
   - classSeparator: ===================separator class======================
     classType: JAVA
     templateEngine: FREE_MARKER
     templateParamFilesDto:
-      - {templateFile: generation-demo\src\main\resources\generationCode\templateFile1_java.ftl, templateParamFile: generation-demo\src\main\resources\generationCode\paramFile1_java.yaml}
+      - {templateFile: src\main\resources\generationCode\templateFile1_java.ftl, templateParamFile: src\main\resources\generationCode\paramFile1_java.yaml}
   - classSeparator: ===================separator class======================
     classType: KOTLIN
     templateEngine: FREE_MARKER_DATABASE
     dataBase: {jdbcDriver: oracle.jdbc.driver.OracleDriver, passwordDb: 1, urlDb: jdbc:oracle:thin:@//localhost:1521/jp, userDb: jp}
     templateParamFilesDto:
-      - {templateFile: generation-demo\src\main\resources\generationCode\templateFile3.ftl, templateParamFile: generation-demo\src\main\resources\generationCode\paramFile3.yaml}
+      - {templateFile: src\main\resources\generationCode\templateFile3.ftl, templateParamFile: src\main\resources\generationCode\paramFile3.yaml}
