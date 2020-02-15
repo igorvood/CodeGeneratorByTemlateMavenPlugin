@@ -1,6 +1,8 @@
 package ru.vood.freemarker.ext.processor
 
+import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.*
+import org.springframework.util.Assert
 import ru.vood.freemarker.ext.sql.SqlFtlException
 import java.io.File
 import java.io.IOException
@@ -17,6 +19,7 @@ abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEF
         param.entries.forEach { registerSharedVar(it.key, it.value) }
         registerSharedVar("template_param", getParamMethod())
         registerSharedVar("template_args", getTemplateArgMethod())
+        registerSharedVar("static", getStaticMethod())
     }
 
     private fun getTemplateArgMethod(): TemplateMethodModelEx {
@@ -83,18 +86,18 @@ abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEF
         return objectWrapper
     }
 
-//    companion object {
-//        protected fun getGetStaticMethod(): TemplateMethodModelEx {
-//            return TemplateMethodModelEx { args: List<*> ->
-//                Assert.isTrue(args.size == 1) { "Wrong number of arguments: expected 1, got " + args.size }
-//                val classNameObj = args[0]!!
-//                Assert.isTrue(
-//                        classNameObj is TemplateScalarModel
-//                ) { "Illegal type of argument #1: expected string, got " + classNameObj.javaClass.name }
-//                BeansWrapperBuilder(incompatibleImprovements).build()
-//                        .staticModels[(classNameObj as TemplateScalarModel).asString]
-//            }
-//        }
+    //    companion object {
+    private fun getStaticMethod(): TemplateMethodModelEx {
+        return TemplateMethodModelEx { args: List<*> ->
+            Assert.isTrue(args.size == 1) { "Wrong number of arguments: expected 1, got " + args.size }
+            val classNameObj = args[0]!!
+            Assert.isTrue(
+                    classNameObj is TemplateScalarModel
+            ) { "Illegal type of argument #1: expected string, got " + classNameObj.javaClass.name }
+            BeansWrapperBuilder(incompatibleImprovements).build()
+                    .staticModels[(classNameObj as TemplateScalarModel).asString]
+        }
+    }
 //    }
 
     override fun process(templateName: String, param: Map<String, *>): String {

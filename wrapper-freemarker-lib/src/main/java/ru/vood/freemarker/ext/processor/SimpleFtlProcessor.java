@@ -29,7 +29,6 @@ public class SimpleFtlProcessor extends AbstractFtlProcessor {
     private static Map<String, Object> getStaticParam() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("shared_hash", new SharedHash());
-//        map.put("static", getGetStaticMethod());
         return map;
     }
 
