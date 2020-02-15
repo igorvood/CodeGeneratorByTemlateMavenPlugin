@@ -1,3 +1,8 @@
+<#assign par = template_param()/>
+<#assign multiMaps = par['multiMaps']/>
+<#assign map = par['map']/>
+<#assign multiList = par['multiList']/>
+
 <#--/*-->
 <#--
 <#--

@@ -1,3 +1,9 @@
+<#assign par = template_param()/>
+<#assign multiMaps = par['multiMaps']/>
+<#assign map = par['map']/>
+<#assign multiList = par['multiList']/>
+
+
 ======================= multiMaps=============================
 <#list multiMaps as l>
     ${l.key} => <#list l.val as l1> ${l1.key} ->${l1.val}|</#list>
