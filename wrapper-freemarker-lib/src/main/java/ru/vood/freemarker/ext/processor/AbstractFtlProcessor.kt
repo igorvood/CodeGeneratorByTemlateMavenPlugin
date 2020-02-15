@@ -4,6 +4,7 @@ import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.*
 import org.springframework.util.Assert
 import ru.vood.freemarker.ext.sql.SqlFtlException
+import ru.vood.freemarker.util.UtilMethodsForTemplateUse
 import java.io.File
 import java.io.IOException
 import java.io.StringWriter
@@ -20,6 +21,11 @@ abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEF
         registerSharedVar("template_param", getParamMethod())
         registerSharedVar("template_args", getTemplateArgMethod())
         registerSharedVar("static", getStaticMethod())
+        registerSharedVar("util_methods", getUtil())
+    }
+
+    private fun getUtil(): TemplateMethodModelEx {
+        return TemplateMethodModelEx { UtilMethodsForTemplateUse() }
     }
 
     private fun getTemplateArgMethod(): TemplateMethodModelEx {
