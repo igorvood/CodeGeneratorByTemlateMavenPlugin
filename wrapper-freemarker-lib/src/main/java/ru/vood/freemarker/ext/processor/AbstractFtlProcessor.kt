@@ -6,7 +6,7 @@ import java.io.File
 import java.io.IOException
 import java.io.StringWriter
 import java.io.Writer
-import java.nio.file.Files
+
 
 abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS), ProcessFtl {
 
@@ -40,7 +40,8 @@ abstract class AbstractFtlProcessor(param: Map<String, Any>) : Configuration(DEF
             if (!file.exists())
                 throw NoSuchFileException(file, null, "File $templateName not exists")
         }
-        return getTemplateFromString(templateName, Files.readString(file.toPath()))
+//        val readText = File(file.absolutePath).readText(Charsets.UTF_8)
+        return getTemplateFromString(templateName, File(file.absolutePath).readText(Charsets.UTF_8))
     }
 
     override fun getTemplateFromString(templateName: String, templateBody: String): Template {

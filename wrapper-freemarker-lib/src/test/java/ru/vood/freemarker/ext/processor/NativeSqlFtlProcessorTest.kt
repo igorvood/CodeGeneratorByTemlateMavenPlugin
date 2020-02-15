@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import sfqtl.TestConfig
 import java.io.File
-import java.nio.file.Files
 import java.util.stream.Stream
 import javax.sql.DataSource
 
@@ -59,7 +58,7 @@ internal class NativeSqlFtlProcessorTest {
                 throw NoSuchFileException(file, null, "File $templateName not exists")
         }
 
-        return Files.readString(file.toPath())
+        return File(file.absolutePath).readText(Charsets.UTF_8)
     }
 
 
