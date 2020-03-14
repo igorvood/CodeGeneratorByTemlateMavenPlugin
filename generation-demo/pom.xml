@@ -89,25 +89,27 @@
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>ru.vood</groupId>
-                <artifactId>code-generator-maven-plugin</artifactId>
-                <version>1.1.0</version>
-                <configuration>
-                    <pluginPropertyYamlFile>${basedir}\src\main\resources\CodeGenerator.yaml
+            <!--
+                        <plugin>
+                            <groupId>ru.vood</groupId>
+                            <artifactId>code-generator-maven-plugin</artifactId>
+                            <version>1.1.0</version>
+                            <configuration>
+                                <pluginPropertyYamlFile>${basedir}\src\main\resources\CodeGenerator.yaml
 
-                    </pluginPropertyYamlFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+                                </pluginPropertyYamlFile>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>compile</id>
+                                    <phase>generate-sources</phase>
+                                    <goals>
+                                        <goal>generate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+            -->
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>

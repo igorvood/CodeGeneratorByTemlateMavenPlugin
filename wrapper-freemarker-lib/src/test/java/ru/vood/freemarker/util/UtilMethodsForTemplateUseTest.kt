@@ -17,4 +17,10 @@ internal class UtilMethodsForTemplateUseTest {
         Assertions.assertEquals("qwertyAsdfgZ", message)
 
     }
+
+    @Test
+    fun sqlToJavaTypeMapping() {
+        val message = UtilMethodsForTemplateUse.sqlToJavaTypeMapping("NUMBER")
+        Assertions.assertEquals("java.math.BigDecimal", message)
+    }
 }

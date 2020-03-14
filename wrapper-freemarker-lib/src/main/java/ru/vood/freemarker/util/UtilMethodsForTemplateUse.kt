@@ -20,6 +20,17 @@ class UtilMethodsForTemplateUse() {
             val toCamelCase = toCamelCase(s)
             return toCamelCase.substring(0, 1).toLowerCase() + toCamelCase.substring(1)
         }
+
+        fun sqlToJavaTypeMapping(sqlType: String): String {
+            val cl = TypeMapping.values()
+                    .filter { sqlType.contains(it.sqlType) }
+                    .map { it.javaClazz }
+                    .firstOrNull()
+            if (cl != null) {
+                return cl.canonicalName
+            } else throw IllegalStateException("No compatible type $sqlType")
+
+        }
     }
 
 }
