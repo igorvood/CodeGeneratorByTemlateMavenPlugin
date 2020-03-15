@@ -36,7 +36,7 @@
     <#return i/>
 </#function>
 
-<#assign tables = get_tables()/>
+<#assign tables = get_tables()/>toCamelCaseFirstLetterLower
 <#macro generateClass tab>
     <#list tab as t>
         package com.example.demo.generate

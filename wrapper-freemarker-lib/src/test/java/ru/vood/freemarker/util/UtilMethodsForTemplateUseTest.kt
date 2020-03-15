@@ -20,7 +20,9 @@ internal class UtilMethodsForTemplateUseTest {
 
     @Test
     fun sqlToJavaTypeMapping() {
-        val message = UtilMethodsForTemplateUse.sqlToJavaTypeMapping("NUMBER")
-        Assertions.assertEquals("java.math.BigDecimal", message)
+        Assertions.assertEquals("java.math.BigDecimal", UtilMethodsForTemplateUse.sqlToJavaTypeMapping("NUMBER"))
+        Assertions.assertEquals("java.math.BigDecimal", UtilMethodsForTemplateUse.sqlToJavaTypeMapping("NUMBER(2)"))
+        Assertions.assertEquals("java.util.Date", UtilMethodsForTemplateUse.sqlToJavaTypeMapping("TIMESTAMP(2)"))
+        Assertions.assertEquals("java.lang.String", UtilMethodsForTemplateUse.sqlToJavaTypeMapping("VARCHAR2(2)"))
     }
 }

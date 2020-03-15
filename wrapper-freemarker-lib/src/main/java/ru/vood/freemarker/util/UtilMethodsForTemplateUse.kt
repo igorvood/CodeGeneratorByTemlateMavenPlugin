@@ -21,16 +21,30 @@ class UtilMethodsForTemplateUse() {
             return toCamelCase.substring(0, 1).toLowerCase() + toCamelCase.substring(1)
         }
 
+        @JvmStatic
         fun sqlToJavaTypeMapping(sqlType: String): String {
             val cl = TypeMapping.values()
                     .filter { sqlType.contains(it.sqlType) }
                     .map { it.javaClazz }
                     .firstOrNull()
             if (cl != null) {
-                return cl.canonicalName
+                return /*cl.simpleName!!+"->"+cl.jvmName+"->"+*/cl.qualifiedName!!
             } else throw IllegalStateException("No compatible type $sqlType")
 
         }
+
+        @JvmStatic
+        fun sqlToRsMethodMapping(sqlType: String): String {
+            val cl = TypeMapping.values()
+                    .filter { sqlType.contains(it.sqlType) }
+                    .map { it.getFromRs }
+                    .firstOrNull()
+            if (cl != null) {
+                return cl
+            } else throw IllegalStateException("No compatible type $sqlType")
+
+        }
+
     }
 
 }
