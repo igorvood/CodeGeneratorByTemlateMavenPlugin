@@ -7,9 +7,9 @@ import kotlin.reflect.KClass
 
 enum class TypeMapping(val sqlType: String, val javaClazz: KClass<*>, val getFromRs: String) {
 
-    NUMBER("NUMBER", BigDecimal::class, "getLong"),
+    NUMBER("NUMBER", BigDecimal::class, "getBigDecimal"),
     DATE("DATE", Date::class, "getDate"),
-    TIMESTAMP("TIMESTAMP", Timestamp::class, "getTimeStamp"),
+    TIMESTAMP("TIMESTAMP", Timestamp::class, "getTimestamp"),
     VARCHAR("VARCHAR", String::class, "getString")
 
 }
